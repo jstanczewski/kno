@@ -1,0 +1,24 @@
+import numpy as np
+import tensorflow as tf
+import matplotlib.pyplot as plt
+
+# **1. Wczytanie modelu dekodera**
+decoder = tf.keras.models.load_model("decoder_model.keras")
+
+# **2. Hardcoded współrzędne latent space**
+latent_x = -3  # Możesz zmienić na inną wartość
+latent_y = 3  # Możesz zmienić na inną wartość
+
+# Ograniczamy wartości do rzeczywistego zakresu
+# latent_x = np.clip(latent_x, -0.6, 0.7)
+# latent_y = np.clip(latent_y, -0.6, 0.7)
+
+# **4. Generowanie obrazu**
+latent_vector = np.array([[latent_x, latent_y]])  # Wektor latentny 2D
+generated_image = decoder.predict(latent_vector)[0]  # Generowanie obrazu
+
+# **5. Wyświetlenie wygenerowanego obrazu**
+plt.imshow(generated_image)
+plt.axis("off")
+plt.title(f"Generated Image from ({latent_x}, {latent_y})")
+plt.show()
